@@ -1,0 +1,35 @@
+9/15/2026, 5:53:16 PM
+I've rebranded the store as Obuya GrassRoots in your logo's colours, with the logo in the header and as the browser icon. The admin panel now has its own URL and a three-step login: password, then an email code, then Google Authenticator. The TypeScript check passes on both frontend and backend. I ran a full login test against a separate copy of the backend using a temporary database, so your real data wasn't touched: all 29 checks passed. I haven't seen the admin screens after login, because that needs a real admin session.
+
+Colours, name and logo
+
+- Theme: green (buttons, links, highlights), gold (labels, stars, badges) and near-white backgrounds with a light green tint. It's set once in globals.css, so every page picks it up, the admin pages included. Red is still used for errors and "Delete".
+- Name: "CraftDiary" and the craft-shop wording ("Atelier", "Artisan", "Keepsake", "Small Batch", "handcrafted") are replaced with Obuya GrassRoots in the header, page title, login pages, product card, product page and admin header. I took "write the components according to those names" to mean the text inside the components; I didn't rename any component files.
+- Logo: I cropped Logo.png into a circle and made the header image, favicon and app icons from it.
+- Unchanged: fonts, the $/₹ price symbols, and the Gifts/Crafts tabs and gift-note feature.
+
+Admin panel
+
+- New address: http://localhost:3000/grassroots-admin, with the login at /grassroots-admin/login. The old /admin now shows "not found", and the store no longer links to the admin panel anywhere.
+- Login steps:
+  a. Email and password.
+  b. A 6-digit code sent by email. It expires in 5 minutes and allows 5 tries.
+  c. A Google Authenticator code. On an admin's first login they scan a QR code to set it up, and a code can't be reused.
+- Session:
+  - The session is kept in a secure browser cookie that page scripts can't read, instead of in the browser's local storage.
+  - It lasts 4 hours, and a new login signs out any older session.
+  - Signing out makes the old cookie useless, even if someone copied it.
+- Brute-force protection: the account locks for 15 minutes after 5 failed attempts. Each IP address is also limited to 20 login requests per 15 minutes.
+- Creating admins: the first admin needs a setup key from .env. After that, only a signed-in superadmin can add admins, and new passwords need at least 12 characters with mixed character types.
+
+What you need to do
+
+1. Your current admins must sign in again at the new URL and set up Google Authenticator on that first login.
+2. Email is not configured yet. While NODE_ENV isn't production, the login code is printed in the backend terminal. In production, login fails until you fill in the SMTP_* lines I added to Backend/.env.
+3. I added two secret keys to Backend/.env: ADMIN_JWT_SECRET and ADMIN_2FA_ENCRYPTION_KEY. Don't change the encryption key later, or every admin will have to set up Google Authenticator again.
+4. Lost phone: there are no recovery codes. To reset an admin, clear totpEnabled and totpSecret on their record in the database.
+5. Placeholder email: the support email on the profile page is now support@obuyagrassroots.com. Replace it with your real address.
+6. Deploying: keep the store and the API on the same main domain (for example shop.x.com and api.x.com) and use HTTPS, or the admin cookie won't be sent.
+
+Backend packages added: otplib, qrcode, nodemailer, express-rate-limit. I restarted your running backend once by touching app.ts, because nodemon doesn't reload .env. Before changing anything, I saved a backup of both projects to backup-before-rebrand.tgz in this session's temporary scratchpad folder.
+===================================================
