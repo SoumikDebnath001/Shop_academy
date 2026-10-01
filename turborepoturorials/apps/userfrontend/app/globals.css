@@ -56,6 +56,20 @@
   --color-brand-red: #d32a23;
   --color-brand-cream: #f3f0c8;
 
+  /* Obuya One store palette (light). Dark values are swapped in under [data-theme="dark"] below. */
+  --color-obuya-bg: #fcefe1; /* light page background: soft warm orange (was cream #fbf7f2) */
+  --color-obuya-glass: rgb(251 247 242 / 0.88);
+  --color-obuya-ink: #1d1a1b;
+  --color-obuya-muted: #5c5356;
+  --color-obuya-line: #c9a39a;
+  --color-obuya-maroon: #7a1d2e;
+  --color-obuya-gold: #b8891f;
+  --color-obuya-avatar: #179a6b;
+  --color-obuya-panel: #f5eeea; /* filter panel, inputs */
+  --color-obuya-card-from: #f9ece2; /* tile gradient: warm peach -> blush */
+  --color-obuya-card-to: #f3e3e1;
+  --color-obuya-track: #3b3436; /* range slider rest track */
+
   /* Neutral greys tinted to match the brand */
   --color-gray-50: #f6f8f5;
   --color-gray-100: #edf1ec;
@@ -99,6 +113,8 @@
   --font-display: 'Libre Caslon Text', sans-serif;
   --font-headline-sm: 'Libre Caslon Text', sans-serif;
   --font-title-lg: 'Plus Jakarta Sans', sans-serif;
+  --font-script: 'Caveat', cursive; /* hero tagline */
+  --font-signature: 'Mr Dafoe', cursive; /* footer "More Than a Game" */
   --text-label-lg: 0.875rem;
   --text-label-lg--line-height: 1.25rem;
   --text-label-lg--letter-spacing: 0.04em;
@@ -147,7 +163,169 @@
 }
 
 
+/* Dark (from demo/darkmodeui.png): near-black warm base with a soft maroon glow, cream text, bright gold accents. */
+[data-theme="dark"] {
+  --color-obuya-bg: #161213;
+  --color-obuya-glass: rgb(22 18 19 / 0.9);
+  --color-obuya-ink: #f3ece4;
+  --color-obuya-muted: #b0a6a0;
+  --color-obuya-line: #5a4322;
+  --color-obuya-maroon: #8c2236;
+  --color-obuya-gold: #f2c037;
+  --color-obuya-panel: #211b1d;
+  --color-obuya-card-from: #2a2123;
+  --color-obuya-card-to: #1d1719;
+  --color-obuya-track: #5a4f50;
+  color-scheme: dark;
+}
+
+/* Dark page backdrop: maroon glow top-right and lower-left, as in the dark design. */
+[data-theme="dark"] .obuya-page {
+  background-image:
+    radial-gradient(ellipse 60% 45% at 85% 0%, rgb(122 29 46 / 0.28), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 0% 70%, rgb(122 29 46 / 0.16), transparent 70%);
+  background-attachment: fixed;
+}
+
+/* Dark tiles: each card in a tile grid gets its own tint fading into the dark base (maroon, olive-gold, green,
+   charcoal), cycling in the order of the dark design. Light mode keeps the blush gradient. */
+[data-theme="dark"] .obuya-tile {
+  background-image: linear-gradient(145deg, var(--tint, #4a1a24) 0%, #1e1819 80%);
+}
+[data-theme="dark"] .obuya-tile:not(:hover):not(:focus-visible) {
+  border-color: rgb(255 255 255 / 0.06); /* resting edge; hover/focus keep the gold border from Tiles.tsx */
+}
+[data-theme="dark"] :is([data-pop-grid], .obuya-tint-grid) > li:nth-child(8n + 1) .obuya-tile { --tint: #7a1d2e; }
+[data-theme="dark"] :is([data-pop-grid], .obuya-tint-grid) > li:nth-child(8n + 2) .obuya-tile { --tint: #4d3c18; }
+[data-theme="dark"] :is([data-pop-grid], .obuya-tint-grid) > li:nth-child(8n + 3) .obuya-tile { --tint: #66202b; }
+[data-theme="dark"] :is([data-pop-grid], .obuya-tint-grid) > li:nth-child(8n + 4) .obuya-tile { --tint: #2c3b22; }
+[data-theme="dark"] :is([data-pop-grid], .obuya-tint-grid) > li:nth-child(8n + 5) .obuya-tile { --tint: #3a2a22; }
+[data-theme="dark"] :is([data-pop-grid], .obuya-tint-grid) > li:nth-child(8n + 6) .obuya-tile { --tint: #6a1c2a; }
+[data-theme="dark"] :is([data-pop-grid], .obuya-tint-grid) > li:nth-child(8n + 7) .obuya-tile { --tint: #3b2226; }
+[data-theme="dark"] :is([data-pop-grid], .obuya-tint-grid) > li:nth-child(8n + 8) .obuya-tile { --tint: #2a2b33; }
+
+/* First-load site loader (components/SiteLoader.tsx). Hidden once <html data-loaded> is set. */
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-obuya-bg);
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+html[data-loaded] .site-loader {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+html:not([data-loaded]) body {
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-loader { transition: none; }
+}
+
+/* Store range slider (filters): gold fill up to the thumb, set via --fill on the element */
+.obuya-range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 9999px;
+  background: linear-gradient(to right, var(--color-obuya-gold) var(--fill, 0%), var(--color-obuya-track) var(--fill, 0%));
+  cursor: pointer;
+}
+.obuya-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: var(--color-obuya-gold);
+  border: 2px solid var(--color-obuya-bg);
+  box-shadow: 0 1px 4px rgb(0 0 0 / 0.25);
+}
+.obuya-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: var(--color-obuya-gold);
+  border: 2px solid var(--color-obuya-bg);
+}
+.obuya-range:focus-visible {
+  outline: 2px solid var(--color-obuya-gold);
+  outline-offset: 4px;
+}
+
+/* Card hover easing: slow start-free glide that settles gently (used by all store cards). */
+@theme {
+  --ease-obuya: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* PopGrid (_components/PopGrid.tsx): cards stay hidden until their pop-out animation starts. */
+[data-pop-grid] > li:not([data-popped]) {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-pop-grid] > li { opacity: 1; }
+}
+
+/* Simple, cheap entrance for product cards (CSS only, no layout measuring). Runs once per newly mounted card. */
+@keyframes obuya-fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+.obuya-fade-up {
+  animation: obuya-fade-up 0.35s ease-out both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .obuya-fade-up { animation: none; }
+}
+
+/* Home: handwritten tagline glows and gently pulses. */
+@keyframes obuya-glow-pulse {
+  0%, 100% { transform: rotate(-3deg) scale(1); text-shadow: 0 0 0 transparent; }
+  50% { transform: rotate(-3deg) scale(1.035); text-shadow: 0 0 14px rgb(242 192 55 / 0.55), 0 0 3px rgb(242 192 55 / 0.45); }
+}
+.obuya-glow-pulse {
+  display: inline-block;
+  animation: obuya-glow-pulse 3.2s ease-in-out infinite;
+}
+/* Tagline underline draws itself in once. */
+@keyframes obuya-draw { to { stroke-dashoffset: 0; } }
+.obuya-draw {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: obuya-draw 1.2s 0.4s ease-out forwards;
+}
+
+/* Social icons "dance": a short hop-and-wiggle every few seconds, staggered per icon (--i). Hover pauses it. */
+@keyframes obuya-dance {
+  0%, 55%, 100% { transform: none; }
+  10% { transform: translateY(-5px) rotate(-12deg); }
+  20% { transform: translateY(0) rotate(9deg); }
+  30% { transform: translateY(-3px) rotate(-6deg); }
+  40% { transform: translateY(0) rotate(3deg); }
+}
+.obuya-dance {
+  animation: obuya-dance 3s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 0.25s);
+}
+.obuya-dance:hover, .obuya-dance:focus-visible {
+  animation-play-state: paused;
+  transform: scale(1.2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .obuya-glow-pulse, .obuya-dance { animation: none; }
+  .obuya-draw { animation: none; stroke-dashoffset: 0; }
+}
+
 @layer base {
+  body {
+    background: var(--color-obuya-bg);
+  }
   html, body {
     margin: 0;
     padding: 0;

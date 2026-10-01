@@ -1,7 +1,6 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { useRouter, usePathname } from 'next/navigation';
 import { api } from '../services/api';
 
 export interface User {
@@ -34,8 +33,6 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   const [user, setUser] = useState<User | null>(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
-  const pathname = usePathname();
 
   const checkAuth = async () => {
     try {
@@ -72,13 +69,6 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     checkAuth();
   }, []);
-
-  // Protect cart route
-  useEffect(() => {
-    if (!isLoading && !isAuthenticated && pathname === '/cart') {
-      router.push('/auth');
-    }
-  }, [isLoading, isAuthenticated, pathname, router]);
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, isLoading, checkAuth, logout }}>
