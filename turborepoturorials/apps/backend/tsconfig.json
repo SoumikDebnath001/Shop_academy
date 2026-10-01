@@ -1,0 +1,18 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "lib": ["es2022"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "rootDir": "./",
+    "outDir": "./dist",
+    "declaration": false,
+    "declarationMap": false,
+    "isolatedModules": false,
+    "noUncheckedIndexedAccess": false,
+    "strict": false,
+    "types": ["node"]
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules", "dist"]
+}

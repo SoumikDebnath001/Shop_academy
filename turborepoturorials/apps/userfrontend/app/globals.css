@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+@theme {
+  --color-secondary-fixed-dim: #f0bd4a;
+  --color-on-tertiary: #ffffff;
+  --color-surface-variant: #dde5da;
+  --color-surface-container-low: #f1f5ee;
+  --color-tertiary-fixed: #ffe0a3;
+  --color-inverse-primary: #8fd6a6;
+  --color-error-container: #ffdad6;
+  --color-on-error: #ffffff;
+  --color-on-background: #171d18;
+  --color-on-surface: #171d18;
+  --color-secondary-container: #fbe3a8;
+  --color-on-tertiary-fixed-variant: #5c3f00;
+  --color-on-primary-fixed: #00210f;
+  --color-primary-container: #156237;
+  --color-on-primary-fixed-variant: #005229;
+  --color-secondary: #8a5f00;
+  --color-primary-fixed-dim: #8fd6a6;
+  --color-surface-tint: #1b7a43;
+  --color-on-error-container: #93000a;
+  --color-surface-container-highest: #dfe5dc;
+  --color-on-secondary-fixed: #281900;
+  --color-tertiary: #7a5200;
+  --color-on-primary: #ffffff;
+  --color-on-secondary: #ffffff;
+  --color-on-primary-container: #ffffff;
+  --color-surface-container-high: #e5ebe2;
+  --color-on-secondary-fixed-variant: #624400;
+  --color-surface-dim: #d7dcd3;
+  --color-outline: #717970;
+  --color-tertiary-container: #d4a02a;
+  --color-primary-fixed: #c8f0d4;
+  --color-on-tertiary-container: #2a1b00;
+  --color-on-surface-variant: #414941;
+  --color-inverse-on-surface: #eef2ea;
+  --color-outline-variant: #c1c9bf;
+  --color-secondary-fixed: #ffdf9a;
+  --color-tertiary-fixed-dim: #e9b949;
+  --color-background: #f8faf5;
+  --color-surface-container-lowest: #ffffff;
+  --color-on-tertiary-fixed: #271900;
+  --color-primary: #1b7a43;
+  --color-surface-container: #ebf0e8;
+  --color-on-secondary-container: #2b1e00;
+  --color-surface-bright: #f8faf5;
+  --color-error: #ba1a1a;
+  --color-surface: #f8faf5;
+  --color-inverse-surface: #2c322d;
+  /* Obuya GrassRoots brand colours */
+  --color-brand-green: #1f8a4c;
+  --color-brand-green-dark: #0f3b24;
+  --color-brand-gold: #d4a02a;
+  --color-brand-black: #0b0b0b;
+  --color-brand-red: #d32a23;
+  --color-brand-cream: #f3f0c8;
+
+  /* Neutral greys tinted to match the brand */
+  --color-gray-50: #f6f8f5;
+  --color-gray-100: #edf1ec;
+  --color-gray-200: #dde3dc;
+  --color-gray-300: #c5cdc4;
+  --color-gray-400: #98a297;
+  --color-gray-500: #6d776c;
+  --color-gray-600: #535c52;
+  --color-gray-700: #3f473f;
+  --color-gray-800: #2a312b;
+  --color-gray-900: #171d18;
+  --color-gray-950: #0d120e;
+  --radius: 0.25rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-full: 9999px;
+  --spacing-space-2xl: 3rem;
+  --spacing-space-md: 1rem;
+  --spacing-margin-desktop: 3rem;
+  --spacing-space-xl: 2rem;
+  --spacing-space-3xs: 0.125rem;
+  --spacing-margin-mobile: 1.25rem;
+  --spacing-space-3xl: 4rem;
+  --spacing-space-2xs: 0.25rem;
+  --spacing-space-sm: 0.75rem;
+  --spacing-gutter: 1.5rem;
+  --spacing-space-xs: 0.5rem;
+  --spacing-max-container: 80rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-4xl: 6rem;
+  --font-label-lg: 'Plus Jakarta Sans', sans-serif;
+  --font-headline-lg: 'Libre Caslon Text', sans-serif;
+  --font-body-md: 'Plus Jakarta Sans', sans-serif;
+  --font-label-sm: 'Plus Jakarta Sans', sans-serif;
+  --font-display-mobile: 'Libre Caslon Text', sans-serif;
+  --font-headline-lg-mobile: 'Libre Caslon Text', sans-serif;
+  --font-body-sm: 'Plus Jakarta Sans', sans-serif;
+  --font-body-lg: 'Plus Jakarta Sans', sans-serif;
+  --font-title-md: 'Plus Jakarta Sans', sans-serif;
+  --font-headline-md: 'Libre Caslon Text', sans-serif;
+  --font-display: 'Libre Caslon Text', sans-serif;
+  --font-headline-sm: 'Libre Caslon Text', sans-serif;
+  --font-title-lg: 'Plus Jakarta Sans', sans-serif;
+  --text-label-lg: 0.875rem;
+  --text-label-lg--line-height: 1.25rem;
+  --text-label-lg--letter-spacing: 0.04em;
+  --text-label-lg--font-weight: 600;
+  --text-headline-lg: 2.5rem;
+  --text-headline-lg--line-height: 3rem;
+  --text-headline-lg--letter-spacing: -0.01em;
+  --text-headline-lg--font-weight: 400;
+  --text-body-md: 1rem;
+  --text-body-md--line-height: 1.625rem;
+  --text-body-md--font-weight: 400;
+  --text-label-sm: 0.75rem;
+  --text-label-sm--line-height: 1rem;
+  --text-label-sm--letter-spacing: 0.06em;
+  --text-label-sm--font-weight: 500;
+  --text-display-mobile: 2.5rem;
+  --text-display-mobile--line-height: 3rem;
+  --text-display-mobile--letter-spacing: -0.015em;
+  --text-display-mobile--font-weight: 400;
+  --text-headline-lg-mobile: 2rem;
+  --text-headline-lg-mobile--line-height: 2.5rem;
+  --text-headline-lg-mobile--letter-spacing: -0.01em;
+  --text-headline-lg-mobile--font-weight: 400;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.375rem;
+  --text-body-sm--font-weight: 400;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.75rem;
+  --text-body-lg--font-weight: 400;
+  --text-title-md: 1.125rem;
+  --text-title-md--line-height: 1.5rem;
+  --text-title-md--font-weight: 600;
+  --text-headline-md: 1.875rem;
+  --text-headline-md--line-height: 2.25rem;
+  --text-headline-md--font-weight: 400;
+  --text-display: 3.5rem;
+  --text-display--line-height: 4rem;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 400;
+  --text-headline-sm: 1.375rem;
+  --text-headline-sm--line-height: 1.75rem;
+  --text-headline-sm--font-weight: 500;
+  --text-title-lg: 1.25rem;
+  --text-title-lg--line-height: 1.75rem;
+  --text-title-lg--font-weight: 600;
+}
+
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .pt-safe {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+  main > :first-child {
+    margin-top: 0 !important;
+  }
+  main > :last-child {
+    margin-bottom: 0 !important;
+  }
+}
+
+::-webkit-scrollbar {
+  display: none;
+}

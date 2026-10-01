@@ -1,0 +1,1689 @@
+{
+	"info": {
+		"_postman_id": "mamistore-api-collection",
+		"name": "MAMISTORE API",
+		"description": "Complete API collection for MAMISTORE E-commerce Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:2556/api/v1",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "user_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "category_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "product_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "cart_item_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "address_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "order_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "payment_id",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "Admin Register",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (jsonData.status && jsonData.data && jsonData.data.token) {",
+											"    pm.collectionVariables.set('admin_token', jsonData.data.token);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Admin Obuya\",\n    \"email\": \"admin@mamistore.com\",\n    \"password\": \"Admin@123\",\n    \"phone\": \"9876543210\",\n    \"role\": \"superadmin\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/register",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "register"]
+								}
+							}
+						},
+						{
+							"name": "Admin Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (jsonData.status && jsonData.data && jsonData.data.token) {",
+											"    pm.collectionVariables.set('admin_token', jsonData.data.token);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin@mamistore.com\",\n    \"password\": \"Admin@123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/login",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "login"]
+								}
+							}
+						},
+						{
+							"name": "Admin Profile",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/profile",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "profile"]
+								}
+							}
+						},
+						{
+							"name": "Update Admin Profile",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Admin Obuya Updated\",\n    \"phone\": \"9876543211\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/profile",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "profile"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "Create Category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (jsonData.status && jsonData.data && jsonData.data._id) {",
+											"    pm.collectionVariables.set('category_id', jsonData.data._id);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Women's Fashion",
+											"type": "text"
+										},
+										{
+											"key": "slug",
+											"value": "womens-fashion",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Trendy women's clothing and accessories",
+											"type": "text"
+										},
+										{
+											"key": "sortOrder",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "",
+											"description": "Category image (optional)"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/category",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "category"]
+								}
+							}
+						},
+						{
+							"name": "Create Sub-Category",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Sarees",
+											"type": "text"
+										},
+										{
+											"key": "slug",
+											"value": "sarees",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Beautiful silk and cotton sarees",
+											"type": "text"
+										},
+										{
+											"key": "parentCategory",
+											"value": "{{category_id}}",
+											"type": "text"
+										},
+										{
+											"key": "sortOrder",
+											"value": "1",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/category",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "category"]
+								}
+							}
+						},
+						{
+							"name": "Get All Categories",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/category",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "category"]
+								}
+							}
+						},
+						{
+							"name": "Get Category By ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/category/{{category_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "category", "{{category_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Update Category",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Women's Fashion Updated",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Updated description for women's fashion",
+											"type": "text"
+										},
+										{
+											"key": "image",
+											"type": "file",
+											"src": "",
+											"description": "New category image (optional)"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/category/{{category_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "category", "{{category_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Delete Category",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/category/{{category_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "category", "{{category_id}}"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "Create Product",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (jsonData.status && jsonData.data && jsonData.data._id) {",
+											"    pm.collectionVariables.set('product_id', jsonData.data._id);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Banarasi Silk Saree",
+											"type": "text"
+										},
+										{
+											"key": "slug",
+											"value": "banarasi-silk-saree",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Exquisite handwoven Banarasi silk saree with intricate golden zari work. Perfect for weddings and special occasions.",
+											"type": "text"
+										},
+										{
+											"key": "shortDescription",
+											"value": "Handwoven Banarasi silk saree with golden zari",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "5999",
+											"type": "text"
+										},
+										{
+											"key": "salePrice",
+											"value": "4499",
+											"type": "text"
+										},
+										{
+											"key": "sku",
+											"value": "MAMI-BSS-001",
+											"type": "text"
+										},
+										{
+											"key": "stock",
+											"value": "50",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "{{category_id}}",
+											"type": "text"
+										},
+										{
+											"key": "brand",
+											"value": "MAMI Originals",
+											"type": "text"
+										},
+										{
+											"key": "tags",
+											"value": "[\"saree\", \"silk\", \"banarasi\", \"wedding\", \"traditional\"]",
+											"type": "text"
+										},
+										{
+											"key": "variants",
+											"value": "[{\"size\": \"Free Size\", \"color\": \"Red\", \"price\": 4499, \"stock\": 20, \"sku\": \"MAMI-BSS-001-RED\"}, {\"size\": \"Free Size\", \"color\": \"Blue\", \"price\": 4499, \"stock\": 15, \"sku\": \"MAMI-BSS-001-BLU\"}, {\"size\": \"Free Size\", \"color\": \"Green\", \"price\": 4699, \"stock\": 15, \"sku\": \"MAMI-BSS-001-GRN\"}]",
+											"type": "text"
+										},
+										{
+											"key": "isFeatured",
+											"value": "true",
+											"type": "text"
+										},
+										{
+											"key": "images",
+											"type": "file",
+											"src": "",
+											"description": "Product images (select multiple files)"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/product",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "product"]
+								}
+							}
+						},
+						{
+							"name": "Create Product 2 (Kurti)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Embroidered Cotton Kurti",
+											"type": "text"
+										},
+										{
+											"key": "slug",
+											"value": "embroidered-cotton-kurti",
+											"type": "text"
+										},
+										{
+											"key": "description",
+											"value": "Comfortable everyday wear cotton kurti with beautiful chikankari embroidery. Light and breathable for Indian summers.",
+											"type": "text"
+										},
+										{
+											"key": "shortDescription",
+											"value": "Cotton kurti with chikankari embroidery",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "1299",
+											"type": "text"
+										},
+										{
+											"key": "salePrice",
+											"value": "899",
+											"type": "text"
+										},
+										{
+											"key": "sku",
+											"value": "MAMI-ECK-002",
+											"type": "text"
+										},
+										{
+											"key": "stock",
+											"value": "100",
+											"type": "text"
+										},
+										{
+											"key": "category",
+											"value": "{{category_id}}",
+											"type": "text"
+										},
+										{
+											"key": "brand",
+											"value": "MAMI Originals",
+											"type": "text"
+										},
+										{
+											"key": "tags",
+											"value": "[\"kurti\", \"cotton\", \"chikankari\", \"daily-wear\"]",
+											"type": "text"
+										},
+										{
+											"key": "variants",
+											"value": "[{\"size\": \"S\", \"color\": \"White\", \"price\": 899, \"stock\": 25}, {\"size\": \"M\", \"color\": \"White\", \"price\": 899, \"stock\": 30}, {\"size\": \"L\", \"color\": \"White\", \"price\": 899, \"stock\": 25}, {\"size\": \"XL\", \"color\": \"White\", \"price\": 949, \"stock\": 20}]",
+											"type": "text"
+										},
+										{
+											"key": "isFeatured",
+											"value": "false",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/product",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "product"]
+								}
+							}
+						},
+						{
+							"name": "Get All Products",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/product?page=1&limit=20",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "product"],
+									"query": [
+										{"key": "page", "value": "1"},
+										{"key": "limit", "value": "20"}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get Products By Category",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/product?category={{category_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "product"],
+									"query": [
+										{"key": "category", "value": "{{category_id}}"}
+									]
+								}
+							}
+						},
+						{
+							"name": "Search Products",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/product?search=saree",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "product"],
+									"query": [
+										{"key": "search", "value": "saree"}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get Product By ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/product/{{product_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "product", "{{product_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Update Product",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "Banarasi Silk Saree - Premium",
+											"type": "text"
+										},
+										{
+											"key": "price",
+											"value": "6999",
+											"type": "text"
+										},
+										{
+											"key": "salePrice",
+											"value": "5499",
+											"type": "text"
+										},
+										{
+											"key": "isFeatured",
+											"value": "true",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/product/{{product_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "product", "{{product_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Delete Product",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/product/{{product_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "product", "{{product_id}}"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Order Management",
+					"item": [
+						{
+							"name": "Get All Orders (Admin)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/order?page=1&limit=20",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "order"],
+									"query": [
+										{"key": "page", "value": "1"},
+										{"key": "limit", "value": "20"}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get Orders By Status (Admin)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/order?status=pending",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "order"],
+									"query": [
+										{"key": "status", "value": "pending"}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get Order By ID (Admin)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/admin/order/{{order_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "order", "{{order_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Update Order Status — Confirmed",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"confirmed\",\n    \"notes\": \"Order confirmed by admin\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/order/{{order_id}}/status",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "order", "{{order_id}}", "status"]
+								}
+							}
+						},
+						{
+							"name": "Update Order Status — Shipped",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"shipped\",\n    \"trackingNumber\": \"DTDC123456789\",\n    \"trackingUrl\": \"https://www.dtdc.in/tracking/shipment-tracking.asp\",\n    \"courierName\": \"DTDC Express\",\n    \"estimatedDelivery\": \"2026-09-10T00:00:00.000Z\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/order/{{order_id}}/status",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "order", "{{order_id}}", "status"]
+								}
+							}
+						},
+						{
+							"name": "Update Order Status — Delivered",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{admin_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "Admin"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"status\": \"delivered\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/admin/order/{{order_id}}/status",
+									"host": ["{{base_url}}"],
+									"path": ["admin", "order", "{{order_id}}", "status"]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Auth",
+					"item": [
+						{
+							"name": "User Register",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (jsonData.status && jsonData.data && jsonData.data.token) {",
+											"    pm.collectionVariables.set('user_token', jsonData.data.token);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Priya Sharma\",\n    \"email\": \"priya@example.com\",\n    \"phone\": \"9123456789\",\n    \"password\": \"User@123\",\n    \"gender\": \"female\",\n    \"dob\": \"1995-03-15\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/register",
+									"host": ["{{base_url}}"],
+									"path": ["user", "register"]
+								}
+							}
+						},
+						{
+							"name": "User Login",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (jsonData.status && jsonData.data && jsonData.data.token) {",
+											"    pm.collectionVariables.set('user_token', jsonData.data.token);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"priya@example.com\",\n    \"password\": \"User@123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/login",
+									"host": ["{{base_url}}"],
+									"path": ["user", "login"]
+								}
+							}
+						},
+						{
+							"name": "User Profile",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/profile",
+									"host": ["{{base_url}}"],
+									"path": ["user", "profile"]
+								}
+							}
+						},
+						{
+							"name": "Update User Profile",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Priya Sharma Updated\",\n    \"phone\": \"9123456780\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/profile",
+									"host": ["{{base_url}}"],
+									"path": ["user", "profile"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Browse",
+					"item": [
+						{
+							"name": "Browse Categories",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/category",
+									"host": ["{{base_url}}"],
+									"path": ["user", "category"]
+								}
+							}
+						},
+						{
+							"name": "Browse Products",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/product?page=1&limit=20",
+									"host": ["{{base_url}}"],
+									"path": ["user", "product"],
+									"query": [
+										{"key": "page", "value": "1"},
+										{"key": "limit", "value": "20"}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get Product Detail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/product/{{product_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["user", "product", "{{product_id}}"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Cart",
+					"item": [
+						{
+							"name": "Add To Cart",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (jsonData.status && jsonData.data && jsonData.data.items && jsonData.data.items.length > 0) {",
+											"    pm.collectionVariables.set('cart_item_id', jsonData.data.items[jsonData.data.items.length - 1]._id);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"productId\": \"{{product_id}}\",\n    \"quantity\": 2,\n    \"size\": \"Free Size\",\n    \"color\": \"Red\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/cart",
+									"host": ["{{base_url}}"],
+									"path": ["user", "cart"]
+								}
+							}
+						},
+						{
+							"name": "Get Cart",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/cart",
+									"host": ["{{base_url}}"],
+									"path": ["user", "cart"]
+								}
+							}
+						},
+						{
+							"name": "Update Cart Item Quantity",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"quantity\": 3\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/cart/{{cart_item_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["user", "cart", "{{cart_item_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Remove Cart Item",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/cart/{{cart_item_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["user", "cart", "{{cart_item_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Clear Cart",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/cart",
+									"host": ["{{base_url}}"],
+									"path": ["user", "cart"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Address",
+					"item": [
+						{
+							"name": "Add Address",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (jsonData.status && jsonData.data && jsonData.data._id) {",
+											"    pm.collectionVariables.set('address_id', jsonData.data._id);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"fullName\": \"Priya Sharma\",\n    \"phone\": \"9123456789\",\n    \"addressLine1\": \"42, Rose Garden Apartments\",\n    \"addressLine2\": \"Near City Mall, MG Road\",\n    \"landmark\": \"Opposite State Bank ATM\",\n    \"city\": \"Kolkata\",\n    \"state\": \"West Bengal\",\n    \"pincode\": \"700001\",\n    \"country\": \"India\",\n    \"type\": \"home\",\n    \"isDefault\": true\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/address",
+									"host": ["{{base_url}}"],
+									"path": ["user", "address"]
+								}
+							}
+						},
+						{
+							"name": "Add Work Address",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"fullName\": \"Priya Sharma\",\n    \"phone\": \"9123456789\",\n    \"addressLine1\": \"Floor 5, Tech Park Building\",\n    \"addressLine2\": \"Sector V, Salt Lake\",\n    \"landmark\": \"Near Wipro Office\",\n    \"city\": \"Kolkata\",\n    \"state\": \"West Bengal\",\n    \"pincode\": \"700091\",\n    \"country\": \"India\",\n    \"type\": \"work\",\n    \"isDefault\": false\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/address",
+									"host": ["{{base_url}}"],
+									"path": ["user", "address"]
+								}
+							}
+						},
+						{
+							"name": "Get All Addresses",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/address",
+									"host": ["{{base_url}}"],
+									"path": ["user", "address"]
+								}
+							}
+						},
+						{
+							"name": "Get Address By ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/address/{{address_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["user", "address", "{{address_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Update Address",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"addressLine1\": \"42/A, Rose Garden Apartments (Updated)\",\n    \"landmark\": \"Near HDFC Bank ATM\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/address/{{address_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["user", "address", "{{address_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Set Default Address",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/address/{{address_id}}/default",
+									"host": ["{{base_url}}"],
+									"path": ["user", "address", "{{address_id}}", "default"]
+								}
+							}
+						},
+						{
+							"name": "Delete Address",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/address/{{address_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["user", "address", "{{address_id}}"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "Place Order (COD)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (jsonData.status && jsonData.data && jsonData.data._id) {",
+											"    pm.collectionVariables.set('order_id', jsonData.data._id);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"addressId\": \"{{address_id}}\",\n    \"paymentMethod\": \"cod\",\n    \"notes\": \"Please deliver before 6 PM\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/order",
+									"host": ["{{base_url}}"],
+									"path": ["user", "order"]
+								}
+							}
+						},
+						{
+							"name": "Get My Orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/order?page=1&limit=10",
+									"host": ["{{base_url}}"],
+									"path": ["user", "order"],
+									"query": [
+										{"key": "page", "value": "1"},
+										{"key": "limit", "value": "10"}
+									]
+								}
+							}
+						},
+						{
+							"name": "Get Order Detail",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/order/{{order_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["user", "order", "{{order_id}}"]
+								}
+							}
+						},
+						{
+							"name": "Cancel Order",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"reason\": \"Changed my mind, want to order a different color\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/order/{{order_id}}/cancel",
+									"host": ["{{base_url}}"],
+									"path": ["user", "order", "{{order_id}}", "cancel"]
+								}
+							}
+						}
+					]
+				},
+				{
+					"name": "Payment",
+					"item": [
+						{
+							"name": "Create Payment",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var jsonData = pm.response.json();",
+											"if (jsonData.status && jsonData.data && jsonData.data._id) {",
+											"    pm.collectionVariables.set('payment_id', jsonData.data._id);",
+											"}"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"orderId\": \"{{order_id}}\",\n    \"method\": \"razorpay\",\n    \"provider\": \"razorpay\",\n    \"transactionId\": \"txn_test_123456\",\n    \"gatewayOrderId\": \"order_test_789\",\n    \"gatewayPaymentId\": \"pay_test_456\",\n    \"gatewaySignature\": \"sig_test_abc123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/user/payment",
+									"host": ["{{base_url}}"],
+									"path": ["user", "payment"]
+								}
+							}
+						},
+						{
+							"name": "Get My Payments",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/payment",
+									"host": ["{{base_url}}"],
+									"path": ["user", "payment"]
+								}
+							}
+						},
+						{
+							"name": "Get Payment By ID",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "{{user_token}}"
+									},
+									{
+										"key": "usertype",
+										"value": "User"
+									}
+								],
+								"url": {
+									"raw": "{{base_url}}/user/payment/{{payment_id}}",
+									"host": ["{{base_url}}"],
+									"path": ["user", "payment", "{{payment_id}}"]
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

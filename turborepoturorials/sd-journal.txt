@@ -1,0 +1,23 @@
+9/21/2026, 9:38:13 PM
+curl -X POST http://localhost:2556/api/v1/admin/register \
+  -H "Content-Type: application/json" \
+  -H "x-admin-setup-key: some-long-random-string" \
+  -d '{"name":"Obuya","email":"you@example.com","password":"MyStr0ng!Passw0rd"}'
+===================================================
+8/9/2026, 9:06:46 PM
+Helper Packages in which have not dev script put them in the Packages
+===================================================
+8/9/2026, 9:04:02 PM
+reusable components which used by all the apps put them in one place in packages
+suppose you have the UI in packages the buttons and other things may be used in all apps 
+they are re usable components
+===================================================
+8/9/2026, 9:02:35 PM
+common pacakage will not run independently 
+apps will run independently
+===================================================
+8/9/2026, 8:57:27 PM
+npx create-turbo@latest           start the turborepo 
+pnpm is used as package manager 
+npm install -g pnpm               command to install pnpm globally
+===================================================
